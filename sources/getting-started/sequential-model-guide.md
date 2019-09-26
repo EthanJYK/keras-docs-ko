@@ -31,9 +31,9 @@ model.add(Activation('relu'))           # Activation 층을 추가합니다.
 
 각 모델은 어떤 형태<sub>Shape</sub>의 값이 입력될지 미리 알아야 합니다. 때문에 `Sequential` 모델의 첫 번째 층은 입력할 데이터의 형태 정보를 받습니다 (이후의 층들은 자동으로 이전 층의 출력 정보를 입력 정보로서 채택하여 형태를 추정합니다). 형태 정보는 다음과 같은 방법으로 입력할 수 있습니다:
 
-- 첫 번째 층의 `input_shape` 인수<sub>Argument</sub>에 형태를 입력하는 방법입니다. `input_shape` 인수는 입력 데이터의 각 차원별 크기를 나타내는 정수값들이 나열된 튜플<sub>Tuple</sub>이며, 정수 대신 `None`을 쓸 경우 아직 정해지지 않은 양의 정수를 나타냅니다. 배치<sub>Batch</sub> 크기는 `input_shape` 인수에 포함되지 않습니다.
-- `input_shape` 인수는 입력 값의 크기와 시계열 입력의 길이를 포괄합니다. 따라서 `Dense`와 같이 2D 처리를 하는 층의 경우 `input_shape` 대신에 `input_dim` 인수를 통해서도 입력 크기를 지정할 수 있으며, 시계열과 같이 3D 처리를 하는 층은 `input_dim`과 `input_length`의 두 인수를 사용해서 입력 차원의 크기와 시계열 길이를 각각 지정할 수 있습니다.
-- 배치 크기를 고정해야 하는 경우 `batch_size` 인수를 사용합니다. (순환 신경망<sub>Recurrent Neural Network</sub>과 같이 현 시점의 결과를 저장하여 다음 시점으로 넘기는 처리를 하는 경우 배치 크기 고정이 필요합니다.) 예를 들어, `batch_size=32`와 `input_shape=(6, 8)`을 층에 입력하면 이후의 모든 입력을 `(32, 6, 8)`의 형태로 처리합니다.
+- 첫 번째 층의 `input_shape` 인자<sub>Argument</sub>에 형태를 입력하는 방법입니다. `input_shape` 인자는 입력 데이터의 각 차원별 크기를 나타내는 정수값들이 나열된 튜플<sub>Tuple</sub>이며, 정수 대신 `None`을 쓸 경우 아직 정해지지 않은 양의 정수를 나타냅니다. 배치<sub>Batch</sub> 크기는 `input_shape` 인자에 포함되지 않습니다.
+- `input_shape` 인자는 입력 값의 크기와 시계열 입력의 길이를 포괄합니다. 따라서 `Dense`와 같이 2D 처리를 하는 층의 경우 `input_shape` 대신에 `input_dim` 인자를 통해서도 입력 크기를 지정할 수 있으며, 시계열과 같이 3D 처리를 하는 층은 `input_dim`과 `input_length`의 두 인자를 사용해서 입력 차원의 크기와 시계열 길이를 각각 지정할 수 있습니다.
+- 배치 크기를 고정해야 하는 경우 `batch_size` 인자를 사용합니다. (순환 신경망<sub>Recurrent Neural Network</sub>과 같이 현 시점의 결과를 저장하여 다음 시점으로 넘기는 처리를 하는 경우 배치 크기 고정이 필요합니다.) 예를 들어, `batch_size=32`와 `input_shape=(6, 8)`을 층에 입력하면 이후의 모든 입력을 `(32, 6, 8)`의 형태로 처리합니다.
 
 이에 따라, 아래의 두 코드는 완전히 동일하게 작동합니다.
 ```python
@@ -49,7 +49,7 @@ model.add(Dense(32, input_dim=784))         # input_dim을 이용하여 입력 �
 
 ## 컴파일하기
 
-모델을 학습시키기 전에 `compile` 메소드를 통해서 학습과정의 세부 사항을 설정합니다. 'compile' 메소드는 다음 세 개의 인수를 입력받습니다.
+모델을 학습시키기 전에 `compile` 메소드를 통해서 학습과정의 세부 사항을 설정합니다. `compile` 메소드는 다음 세 개의 인자를 입력받습니다.
 
 - 최적화 함수<sub>Optimizer</sub>: 기존의 최적화 함수를(예: `rmsprop`, `adagrad` 등) 문자열<sub>String</sub>로 된 식별자<sub>Identifier</sub>를 통해 불러오거나 `Optimizer` 클래스의 인스턴스를 만들어서 사용할 수 있습니다. 참고: [최적화 함수](/optimizers) 
 - 손실 함수<sub>Loss Function</sub>: 모델이 학습을 통해 최소화하고자 하는 목적 함수<sub>Objective Function</sub>입니다. 이 또한 기존 손실 함수의 문자열 식별자나 (예: `categorical_crossentropy`, `mse` 등) 특정 목적 함수를 사용할 수 있습니다. 참고: [손실 함수](/losses)
@@ -73,7 +73,7 @@ model.compile(optimizer='rmsprop',
 # 사용자 정의 평가 지표 예시
 import keras.backend as K
 
-def mean_pred(y_true, y_pred):                  # y_true와 y_pred 두 개의 인수를 받는 지표 함수 mean_pred를 정의합니다.
+def mean_pred(y_true, y_pred):                  # y_true와 y_pred 두 개의 인자를 받는 지표 함수 mean_pred를 정의합니다.
     return K.mean(y_pred)                       # y_pred의 평균값을 반환합니다. 
 
 model.compile(optimizer='rmsprop',
@@ -369,7 +369,7 @@ batch_size = 32
 
 # 입력 데이터의 형태: (batch_size, timesteps, data_dim)
 # 상태 저장을 활용하기 위해서는 모든 배치의 크기가 같아야 합니다.
-# 이 경우 input_shape 인수 대신 batch_input_shape 인수를 사용하여 배치 크기를 함께 명시합니다.
+# 이 경우 input_shape 인자 대신 batch_input_shape 인자를 사용하여 배치 크기를 함께 명시합니다.
 # k번째 배치의 i번째 표본은 k-1번째 배치의 i번째 표본으로부터 상태를 이어받습니다.
 
 model = Sequential()
