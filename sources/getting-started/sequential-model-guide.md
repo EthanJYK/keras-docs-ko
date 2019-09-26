@@ -56,7 +56,7 @@ model.add(Dense(32, input_dim=784))         # input_dim을 이용하여 입력 �
 - 평가 지표<sub>Metric</sub> 리스트: 모델의 성능을 평가할 지표를 리스트 형식으로 입력합니다. 예컨대 분류문제라면 `metrics=['accuracy']`를 통해 정확도<sub>Accuracy</sub>를 산출할 수 있습니다. 평가 지표는 기존 지표 함수를 문자열 식별자로 불러오거나 사용자가 함수를 정의하여 지정할 수 있습니다. 참고: [평가 지표](/metrics) 
 
 ```python
-# 다중 클래스 분류 문제 예시 
+# 다중 분류 문제 예시 
 model.compile(optimizer='rmsprop',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
@@ -107,7 +107,7 @@ model.fit(data, labels, epochs=10, batch_size=32)           # 생성된 데이�
 ```
 
 ```python
-# 하나의 데이터를 입력받아 열 개의 클래스로 분류하는 다중 클래스 분류 모델의 경우:
+# 하나의 데이터를 입력받아 열 개의 클래스로 분류하는 다중 분류 모델의 경우:
 
 model = Sequential()
 model.add(Dense(32, activation='relu', input_dim=100))      
@@ -121,7 +121,7 @@ import numpy as np
 data = np.random.random((1000, 100))
 labels = np.random.randint(10, size=(1000, 1))              # 0과 9사이 정수값을 갖는 100 x 1 차원 레이블 행렬을 무작위로 생성합니다.
 
-# 레이블을 10개 클래스의 명목형 원-핫 인코딩 데이터로 변환
+# 레이블을 열 개 클래스의 명목형 원-핫 인코딩 데이터로 변환
 one_hot_labels = keras.utils.to_categorical(labels, num_classes=10)
 
 # 각 32개씩의 배치로 나누어 총 10회 학습
@@ -146,7 +146,7 @@ model.fit(data, one_hot_labels, epochs=10, batch_size=32)
 ...등등.
 
 
-### 다중 클래스 소프트맥스 분류<sub>Multi-class Softmax Classification</sub>를 위한 다층 신경망 (MLP):
+### 다중 소프트맥스 분류<sub>Multi-class Softmax Classification</sub>를 위한 다층 신경망 (MLP):
 
 ```python
 import keras
